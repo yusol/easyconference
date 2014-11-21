@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+	<!--=================================================================== -->
+	<!--- Core ApplicationContext : runtime-server, collect-server, develop-server, admin-server-->
+	<!--=================================================================== -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+				/WEB-INF/config/springcore/core-server-beans.xml 
+				/WEB-INF/config/springcore/core-datasource.xml 
+				/WEB-INF/config/springcore/core-transaction.xml 
+		</param-value>
+	</context-param>
+		
+
+	<!--=================================================================== -->
+	<!--- Servlet listeners -->
+	<!--=================================================================== -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+	
+	<!--=================================================================== -->
+	<!--- Security -->
+	<!--=================================================================== -->
+	<!-- <filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+	
+	
+	<!--=================================================================== -->
+	<!--- Encoding -->
+	<!--=================================================================== -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!--=================================================================== -->
+	<!-- LogBack Logging Tracing in Web call : http://host/yourWebapp/lbClassicStatus -->
+	<!-- ref :  http://logback.qos.ch/manual/configuration.html -->
+	<!--=================================================================== -->
+	 <!-- <servlet>
+	    <servlet-name>ViewStatusMessages</servlet-name>
+	    <servlet-class>ch.qos.logback.classic.ViewStatusMessagesServlet</servlet-class>
+	 </servlet>
+	
+	 <servlet-mapping>
+	    <servlet-name>ViewStatusMessages</servlet-name>
+	    <url-pattern>/lbClassicStatus</url-pattern>
+	 </servlet-mapping> -->
+	
+
+	<!--=================================================================== -->
+	<!--- WebApplicationContext -->
+	<!--=================================================================== -->
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>debateServer</servlet-name> -->
+<!-- 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>contextConfigLocation</param-name> -->
+<!-- 			<param-value> -->
+<!-- 				/WEB-INF/config/springmvc/common-dispatcher-servlet.xml -->
+<!-- 			</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<load-on-startup>1</load-on-startup> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>debateServer</servlet-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+	
+	<!--=================================================================== -->
+	<!--- Web Common -->
+	<!--=================================================================== -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+	
+</web-app>
