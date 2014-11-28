@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="persistence.data.ActorDAO">
+
+	<typeAlias alias="ActorVO" type="kr.co.wigsys.base.persistence.model.ActorVO" />
+	
+	<select id="findAll" resultClass="ActorVO" >
+		select	actor_id as id,
+				actor_nm as name,
+				actor_type as type,
+				actor_proto as protocol,
+				class_id as classId,
+				con_info_id as conInfoId,
+				sql_id as sqlId,
+				collect_id as collectId,
+				adapter_id as adapterId,
+				schedule_type as scheduleType,
+				schedule_script as scheduleScript,
+				reg_time as regTime
+		from	mr_actor
+	</select>
+	
+	<select id="findById" resultClass="ActorVO" parameterClass="ActorVO">
+		select	actor_id as id,
+				actor_nm as name,
+				actor_type as type,
+				actor_proto as protocol,
+				class_id as classId,
+				con_info_id as conInfoId,
+				sql_id as sqlId,
+				collect_id as collectId,
+				adapter_id as adapterId,
+				schedule_type as scheduleType,
+				schedule_script as scheduleScript,
+				reg_time as regTime
+		from	mr_actor
+		where	 actor_id = #id#
+	</select>
+	
+	<insert id="insert" parameterClass="ActorVO">
+		<![CDATA[
+			insert into mr_actor( actor_nm, actor_type, actor_proto, class_id, con_info_id, sql_id, collect_id, adapter_id, schedule_type, schedule_script, reg_time )
+			values ( #name#, #type#, #protocol#, #classId#, #conInfoId#, #sqlId#, #collectId#, #adapterId#, #scheduleType#, #scheduleScript#, formatdatetime(sysdate, 'yyyymmddhhmmss') )
+		]]>
+		<selectKey resultClass="int" keyProperty="id">  
+       		call scope_identity()
+     	</selectKey>
+	</insert>
+	
+	<update id="update" parameterClass="ActorVO">
+	    <![CDATA[
+		  update mr_actor 
+		  set actor_nm = #name#,
+			  actor_type = #type#,
+			  actor_proto = #protocol#,
+			  class_id = #classId#,
+			  con_info_id = #conInfoId#,
+			  sql_id = #sqlId#,
+			  collect_id = #collectId#,
+			  adapter_id = #adapterId#,
+			  schedule_type = #scheduleType#,
+			  schedule_script = #scheduleScript#,
+			  reg_time = formatdatetime(sysdate, 'yyyymmddhhmmss')
+		  where actor_id = #id#
+		]]>
+	</update>
+	
+	<delete id="delete" parameterClass="ActorVO">
+		delete
+		from	mr_actor
+		where	 actor_id = #id#
+	</delete>
+	
+	<delete id="deleteAll">
+		delete
+		from	mr_actor
+	</delete>
+	
+</sqlMap>
